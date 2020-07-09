@@ -287,6 +287,9 @@ fw_sync_with_authserver(void)
             auth_server_request(&authresponse, REQUEST_TYPE_COUNTERS, p1->ip, p1->mac, p1->token, p1->counters.incoming,
                                 p1->counters.outgoing, p1->counters.incoming_delta, p1->counters.outgoing_delta);
         }
+        
+        username;
+
 
         time_t current_time = time(NULL);
         debug(LOG_INFO,

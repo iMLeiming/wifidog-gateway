@@ -210,6 +210,7 @@ http_send_redirect_to_auth(request * r, const char *urlFragment, const char *tex
     char *protocol = NULL;
     int port = 80;
     t_auth_serv *auth_server = get_auth_server();
+    
 
     if (auth_server->authserv_use_ssl) {
         protocol = "https";
@@ -254,8 +255,20 @@ http_callback_auth(httpd * webserver, request * r)
 {
     t_client *client;
     httpVar *token;
+    httpVar *username;
     char *mac;
     httpVar *logout = httpdGetVariableByName(r, "logout");
+    
+    username = httpdGetVariableByName(r,"u");
+    if(username->value == NULL)
+    {
+        debug(LOG_ERR,"Failed to retrieve username for ip %s", r->clientAddr);        
+    }else
+    {
+        
+    
+
+    }
 
     if ((token = httpdGetVariableByName(r, "token"))) {
         /* They supplied variable "token" */
@@ -269,7 +282,7 @@ http_callback_auth(httpd * webserver, request * r)
 
             if ((client = client_list_find(r->clientAddr, mac)) == NULL) {
                 debug(LOG_DEBUG, "New client for %s", r->clientAddr);
-                client_list_add(r->clientAddr, mac, token->value);
+                client_list_add(r->clientAddr, mac, token->value,username->value);
             } else if (logout) {
                 logout_client(client);
             } else {

@@ -53,12 +53,13 @@ typedef struct _t_client {
     char *mac;                          /**< @brief Client Mac address */
     char *token;                        /**< @brief Client token */
     int fw_connection_state;     /**< @brief Connection state in the
-						     firewall */
+    						     firewall */
     int fd;                             /**< @brief Client HTTP socket (valid only
 					     during login before one of the
 					     _http_* function is called */
     t_counters counters;                /**< @brief Counters for input/output of
 					     the client. */
+    char *uname;
 } t_client;
 
 /** @brief Get a new client struct, not added to the list yet */
@@ -77,7 +78,7 @@ void client_list_insert_client(t_client *);
 void client_list_destroy(t_client *);
 
 /** @brief Adds a new client to the connections list */
-t_client *client_list_add(const char *, const char *, const char *);
+t_client *client_list_add(const char *, const char *, const char *,const char *);
 
 /** Duplicate the whole client list to process in a thread safe way */
 int client_list_dup(t_client **);

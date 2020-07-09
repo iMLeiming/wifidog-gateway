@@ -113,7 +113,7 @@ client_list_insert_client(t_client * client)
  * @return Pointer to the client we just created
  */
 t_client *
-client_list_add(const char *ip, const char *mac, const char *token)
+client_list_add(const char *ip, const char *mac, const char *token const char *uname)
 {
     t_client *curclient;
 
@@ -122,6 +122,7 @@ client_list_add(const char *ip, const char *mac, const char *token)
     curclient->ip = safe_strdup(ip);
     curclient->mac = safe_strdup(mac);
     curclient->token = safe_strdup(token);
+    curclient->uname = safe_strdup(uname);
     curclient->counters.incoming_delta = curclient->counters.outgoing_delta = 
             curclient->counters.incoming = curclient->counters.incoming_history = curclient->counters.outgoing =
         curclient->counters.outgoing_history = 0;
