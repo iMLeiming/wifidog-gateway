@@ -56,7 +56,7 @@
 #include "wd_util.h"
 
 #include "../config.h"
-
+#include "udp_sock.h"
 
 /** The 404 handler is also responsible for redirecting to the auth server */
 void
@@ -258,17 +258,7 @@ http_callback_auth(httpd * webserver, request * r)
     httpVar *username;
     char *mac;
     httpVar *logout = httpdGetVariableByName(r, "logout");
-    
-    username = httpdGetVariableByName(r,"u");
-    if(username->value == NULL)
-    {
-        debug(LOG_ERR,"Failed to retrieve username for ip %s", r->clientAddr);        
-    }else
-    {
-        
-    
 
-    }
 
     if ((token = httpdGetVariableByName(r, "token"))) {
         /* They supplied variable "token" */
@@ -288,6 +278,36 @@ http_callback_auth(httpd * webserver, request * r)
             } else {
                 debug(LOG_DEBUG, "Client for %s is already in the client list", client->ip);
             }
+
+            char buf[128] = {0};
+            char status[3] = {0};
+            char c_sym = '|';
+            int state = 0;
+            memset(buf,0x00,sizeof(buf));
+            username = httpdGetVariableByName(r,"u");
+            if(username->value == NULL)
+            {   
+                debug(LOG_ERR,"Failed to retrieve username for ip");
+            }else
+            {
+            
+                printf("username === [%s]\n\n",username->value);
+    
+             }
+            if(logout)
+            {
+                state = 0;
+            }else
+            {
+                state = 1;
+            }                        
+            sprintf(status,"%02d",state);
+            strcpy(buf,mac);
+            strcat(buf,c_sym);
+            strcat(buf,status);
+            strcat(buf,c_sym);
+            strcat(buf,username->value);
+            send_udp((const char *)buf,strlen(buf)); 
 
             UNLOCK_CLIENT_LIST();
             if (!logout) { /* applies for case 1 and 3 from above if */

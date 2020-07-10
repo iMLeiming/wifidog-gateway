@@ -18,19 +18,13 @@ typedef struct _sock_st
 
 _sock_st st;
 
-int get_udp_server(void)
+int create_udp_connect(void)
 {
 	int cfd = socket(AF_INET,SOCK_DGRAM,0);
 
-	//struct sockaddr_in serv;
-	
-	st.serv.sin_family = AF_INET;
 	st.serv.sin_port = htons(8888);
 	inet_pton(AF_INET,"127.0.0.1",&serv.sin_addr.s_addr);
-	//char buf[256] = {0};
-	//memset(buf,0x00,sizeof(buf));
 	st.cfd = cfd;
-	//sendto(cfd,buf,strlen(buf),0,(struct sockaddr*)&serv,sizeof(serv));
 	
 	return cfd;
 

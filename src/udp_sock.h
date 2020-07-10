@@ -1,4 +1,4 @@
 #include <stdio.h>
 
-int get_dup_server(void);
-int send_udp(const char *,int );
+int create_udp_connect(void);
+int send_udp(const char *str,int strlen);

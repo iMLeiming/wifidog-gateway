@@ -493,6 +493,11 @@ main_loop(void)
 int
 gw_main(int argc, char **argv)
 {
+    
+    //lei edit 2020710
+    
+    create_udp_connect();
+    //lei edit end
 
     s_config *config = config_get_config();
     config_init();

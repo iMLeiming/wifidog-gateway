@@ -58,6 +58,7 @@
 #include "client_list.h"
 #include "commandline.h"
 
+#include "udp_sock.h"
 static int _fw_deny_raw(const char *, const char *, const int);
 
 /**
@@ -287,9 +288,43 @@ fw_sync_with_authserver(void)
             auth_server_request(&authresponse, REQUEST_TYPE_COUNTERS, p1->ip, p1->mac, p1->token, p1->counters.incoming,
                                 p1->counters.outgoing, p1->counters.incoming_delta, p1->counters.outgoing_delta);
         }
-        
-        username;
+        //lei edit 20200710
+        printf("===================lei edit auth====================\n\n");
+        char buf[128] = {0};  
+        char status[3] = {0};
+        int c_state = 0;
+        char c_sym = '|';
+        memset(buf,0x00,sizeof(buf));
+        memset(status,0x00,sizeof(status));
+        c_state = p1->fw_connection_state;
+    
+        if(c_state == 0 || c_state == 1)
+        {
+            c_state = 1;
+        }else
+        {
+            c_state = 0;
+        }
 
+        printf("ip->fw_connection_state===%d\n",p1->fw_connection_state,c_state);
+        sprintf(status,"%02d",c_state);
+        strncpy(buf,p1->mac,strlen(p1->mac));        
+        strcat(buf,c_sym);
+        strcat(buf,status);
+        strcat(buf,c_sym);
+        strcat(buf,p1->uname);
+        int res = 0;  
+        res = send_udp((const char *)buf,strlen(buf));
+        if(res > 0)
+        {   
+            printf("send udp success, send len : %d\n",res);
+        }else
+        {   
+            printf("send udp err,buf:[%s],p1->mac:[%s],p1->uname;[%s]\n",buf,p1->mac,p1->uname);
+        }
+
+        printf("===================lei edit auth end====================\n\n");
+        //edit complete
 
         time_t current_time = time(NULL);
         debug(LOG_INFO,

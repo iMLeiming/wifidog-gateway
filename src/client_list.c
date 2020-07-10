@@ -113,7 +113,7 @@ client_list_insert_client(t_client * client)
  * @return Pointer to the client we just created
  */
 t_client *
-client_list_add(const char *ip, const char *mac, const char *token const char *uname)
+client_list_add(const char *ip, const char *mac, const char *token, const char *uname)
 {
     t_client *curclient;
 

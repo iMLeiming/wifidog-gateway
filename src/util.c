@@ -413,3 +413,35 @@ save_pid_file(const char *pf)
 
     return;
 }
+
+/**lei edit 20200710*/
+typedef struct _sock_st
+{
+    struct sockaddr_in serv;
+    int cfd;
+}sock_st;
+
+sock_st st; 
+
+int create_udp_connect(void)
+{
+    int cfd = socket(AF_INET,SOCK_DGRAM,0);
+
+    st.serv.sin_port = htons(8888);
+    inet_pton(AF_INET,"127.0.0.1",&st.serv.sin_addr.s_addr);
+    st.cfd = cfd;
+    
+    return cfd;
+
+}
+
+int send_udp(const char *str,int strlen)
+{   
+    int send_len = sendto(st.cfd,str,strlen,0,(struct sockaddr *)&st.serv,sizeof(st.serv));
+
+    return send_len;
+}
+
+
+
+

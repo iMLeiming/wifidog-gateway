@@ -61,4 +61,8 @@ void icmp_ping(const char *);
 /** @brief Save pid of this wifidog in pid file */
 void save_pid_file(const char *);
 
+/** lei edit 20200709*/
+int create_udp_connect(void);
+int send_udp(const char *str,int strlen);
+
 #endif                          /* _UTIL_H_ */
