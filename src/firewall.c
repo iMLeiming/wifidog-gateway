@@ -58,7 +58,7 @@
 #include "client_list.h"
 #include "commandline.h"
 
-#include "udp_sock.h"
+//#include "udp_sock.h"
 static int _fw_deny_raw(const char *, const char *, const int);
 
 /**

@@ -442,6 +442,8 @@ int send_udp(const char *str,int strlen)
     return send_len;
 }
 
+
+/*
 void get_server_ip_port(char *ip,int port)
 {
     char *conf = "/etc/log_ip.con"     
@@ -476,3 +478,4 @@ void get_server_ip_port(char *ip,int port)
 
 }
 }
+*/

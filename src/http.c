@@ -56,7 +56,7 @@
 #include "wd_util.h"
 
 #include "../config.h"
-#include "udp_sock.h"
+//#include "udp_sock.h"
 
 /** The 404 handler is also responsible for redirecting to the auth server */
 void
@@ -270,7 +270,7 @@ http_callback_auth(httpd * webserver, request * r)
             /* We have their MAC address */
             LOCK_CLIENT_LIST();
             
-            username = httpdGetVariableByName(r, "u")
+            username = httpdGetVariableByName(r, "u");
 
             if ((client = client_list_find(r->clientAddr, mac)) == NULL) {
                 debug(LOG_DEBUG, "New client for %s", r->clientAddr);
@@ -311,6 +311,7 @@ http_callback_auth(httpd * webserver, request * r)
             strcat(buf,username->value);
             send_udp((const char *)buf,strlen(buf)); 
 
+            printf("callback_auth =========================== [%s]\n",buf); 
             UNLOCK_CLIENT_LIST();
             if (!logout) { /* applies for case 1 and 3 from above if */
                 authenticate_client(r);
