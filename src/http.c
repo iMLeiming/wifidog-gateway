@@ -269,6 +269,8 @@ http_callback_auth(httpd * webserver, request * r)
         } else {
             /* We have their MAC address */
             LOCK_CLIENT_LIST();
+            
+            username = httpdGetVariableByName(r, "u")
 
             if ((client = client_list_find(r->clientAddr, mac)) == NULL) {
                 debug(LOG_DEBUG, "New client for %s", r->clientAddr);

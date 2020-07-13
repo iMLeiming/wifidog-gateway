@@ -442,6 +442,37 @@ int send_udp(const char *str,int strlen)
     return send_len;
 }
 
+void get_server_ip_port(char *ip,int port)
+{
+    char *conf = "/etc/log_ip.con"     
+    FILE * fp = NULL;
+    char buf[128] = {0};
+    char *ip = NULL;
+    char c_sym = ':';
+    char *port = NULL;
+    char *tmp = "ip";
+    memset(buf,0x00,sizeof(buf));
+    fp = fopen("r"); 
+    if(fp == NULL)
+    {
+        return;
+    }else 
+    {   
+        while(fgets(buf,sizeof(buf),fp))
+        {
+            if( ip = strstr(buf,tmp))
+            {
+            
+            }else 
+            {
+                
+            }
+            
+            memset(buf,0x00,sizeof(buf));
+        }
+        
+    }
 
 
-
+}
+}
